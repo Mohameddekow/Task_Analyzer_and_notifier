@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group>
+
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@drawable/ic_round_home"
+            android:title="Home" />
+
+
+        <item
+            android:id="@+id/calendarFragment"
+            android:icon="@drawable/ic_round_calendar_month"
+            android:title="Calender" />
+        <item
+            android:id="@+id/analyzeFragment"
+            android:icon="@drawable/ic_round_analytics"
+            android:title="Analyze" />
+
+    </group>
+
+</menu>
