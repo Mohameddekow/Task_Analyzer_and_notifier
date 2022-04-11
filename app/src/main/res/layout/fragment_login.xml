@@ -59,7 +59,9 @@
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
         android:fontFamily="monospace"
         android:text="@string/forgot_password"
         android:textSize="17sp"
@@ -70,14 +72,14 @@
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@color/purple_200"
-        android:fontFamily="monospace"
+        android:layout_marginTop="72dp"
         android:text="@string/login"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@id/tvLogin"
-        app:layout_constraintStart_toStartOf="@id/tvLogin"
-        app:layout_constraintTop_toBottomOf="@id/forgotPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/tvPassword"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -101,8 +103,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:textSize="18sp"
             android:padding="5dp"
             android:text="@string/register"
             android:textStyle="bold" />
     </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

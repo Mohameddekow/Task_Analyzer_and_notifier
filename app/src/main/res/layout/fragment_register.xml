@@ -128,27 +128,27 @@
 
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/purple_200"
-        android:fontFamily="monospace"
-        android:padding="7dp"
         android:text="@string/register"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@id/termsLayout"
-        app:layout_constraintStart_toStartOf="@id/termsLayout"
-        app:layout_constraintTop_toBottomOf="@id/termsLayout" />
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvConfirmPassword"
+        app:layout_constraintStart_toStartOf="@+id/tvConfirmPassword"
+        app:layout_constraintTop_toBottomOf="@+id/termsLayout" />
+
+
+
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="@id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin">
+        app:layout_constraintEnd_toEndOf="@id/btnRegister"
+        app:layout_constraintStart_toStartOf="@id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@id/btnRegister">
 
         <TextView
             android:id="@+id/DoNotHaveAnAccount"
@@ -159,11 +159,12 @@
             android:text="@string/already_have_an_account" />
 
         <TextView
-            android:id="@+id/tvRegister"
+            android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:padding="5dp"
+            android:textSize="18sp"
             android:text="@string/login"
             android:textStyle="bold" />
     </LinearLayout>

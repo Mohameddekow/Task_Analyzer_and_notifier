@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.loginFragment -> {
                     toolBar.navigationIcon = null
-                    supportActionBar?.hide()
+                    supportActionBar?.show()
 
                     bottomNavAppBar.isVisible = false
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.registerFragment -> {
                     toolBar.navigationIcon = null
-                    supportActionBar?.hide()
+                    supportActionBar?.show()
 
                     bottomNavAppBar.isVisible = false
 

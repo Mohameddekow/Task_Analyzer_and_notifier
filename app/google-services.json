@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "100856356522",
+    "project_id": "taskkeeperandanalyzer",
+    "storage_bucket": "taskkeeperandanalyzer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100856356522:android:e867f445b0d6aa0c2ebad3",
+        "android_client_info": {
+          "package_name": "com.example.taskkeeperandanalyzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100856356522-p3qfkvb45qe3ejer8kj9ipo8o54t1l1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4gv2BYqenai5rjxy_pl1FyUbKHirRPCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100856356522-p3qfkvb45qe3ejer8kj9ipo8o54t1l1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
