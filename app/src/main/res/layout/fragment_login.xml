@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tvLogin"
+        android:id="@+id/tvEmailAddress"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etLogin"
+            android:id="@+id/etEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_round_mail"
@@ -38,9 +38,10 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintEnd_toEndOf="@id/tvLogin"
-        app:layout_constraintStart_toStartOf="@id/tvLogin"
-        app:layout_constraintTop_toBottomOf="@id/tvLogin">
+        app:passwordToggleEnabled="true"
+        app:layout_constraintEnd_toEndOf="@id/tvEmailAddress"
+        app:layout_constraintStart_toStartOf="@id/tvEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailAddress">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"

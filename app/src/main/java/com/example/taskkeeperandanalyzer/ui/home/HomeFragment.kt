@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
 class HomeFragment : Fragment() {

@@ -9,10 +9,17 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.databinding.FragmentSplashBinding
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class SplashFragment : Fragment() {
+
+@AndroidEntryPoint
+class SplashFragment  : Fragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+
+    @Inject lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,21 +29,18 @@ class SplashFragment : Fragment() {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
 
+        //current user
+        val currentUser = auth.currentUser
 
         Handler().postDelayed(
             {
-              //  if (onBoardingFinished()){
-                //if user is log in go home
-
+                if (currentUser != null){
                     findNavController().navigate(R.id.action_splashFagment_to_homeFragment)
 
-               // }else{
+                }else{
+                    findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                }
 
-                // else go to login
-
-                    //findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-
-               // }
             },2000
         )
 
