@@ -40,23 +40,33 @@ class RegisterRepository
           return  auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val uid = auth.currentUser?.uid
 
-                        if (uid != null) {
+                        val currentUser = auth.currentUser
+                        currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
 
-                            //add the registered user to  firestore
-                            firebaseFirestoreDb.collection(usersRootRef).document(uid)
-                                .set(UserModel(name, email)).addOnCompleteListener {
-                                if (task.isSuccessful) {
-                                    Log.d("added to fireStore:", task.isSuccessful.toString())
+                            //check if email sending was success then add his details to fireStore
+                            if (task.isSuccessful){
+                                val uid = auth.currentUser?.uid
+
+                                if (uid != null) {
+
+                                    //add the registered user to  firestore
+                                    firebaseFirestoreDb.collection(usersRootRef).document(uid)
+                                        .set(UserModel(name, email)).addOnCompleteListener {
+                                            if (task.isSuccessful) {
+                                                Log.d("added to fireStore:", task.isSuccessful.toString())
 
 //                                    _firestoreRegState.value = "adding user to firestore is: ${task.isSuccessful.toString()}"
 
-                                } else {
-                                    _firestoreRegState.postValue("registration failed due to: ${task.exception?.message}")
+                                            } else {
+                                                _firestoreRegState.postValue("registration failed due to: ${task.exception?.message}")
+                                            }
+                                        }
                                 }
                             }
+
                         }
+
 
 
                     }

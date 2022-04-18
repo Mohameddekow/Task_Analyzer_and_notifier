@@ -15,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.constants.USERSROOTREF
 import com.example.taskkeeperandanalyzer.databinding.FragmentRegisterBinding
+import com.example.taskkeeperandanalyzer.utils.showAlertDialog
 import com.example.taskkeeperandanalyzer.utils.showLongToast
+import com.example.taskkeeperandanalyzer.utils.showProgressDialog
 import com.example.taskkeeperandanalyzer.utils.showShortToast
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,6 +58,14 @@ class RegisterFragment() : Fragment() {
                 val confirmPassword = etConfirmPassword.text.toString().trim()
 
 
+
+                val progressDialog = showProgressDialog(
+                    requireContext(),
+                    "Registration",
+                    "Registration is loading, please wait..."
+                )
+
+
                 when {
                     TextUtils.isEmpty(name)
                             && TextUtils.isEmpty(email)
@@ -84,6 +94,10 @@ class RegisterFragment() : Fragment() {
 
                         if (password == confirmPassword) {
 
+                            //show the progressDialog on loading
+                            progressDialog.show()
+
+
                             // dismiss keyboard
                             val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                             inputManager.hideSoftInputFromWindow(binding.btnRegister.windowToken, 0)
@@ -94,9 +108,28 @@ class RegisterFragment() : Fragment() {
                                 if (task.isSuccessful){
                                     showLongToast(requireContext(), "Registration successful")
 
-                                    findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
+                                    //dismiss the progressDialog after a successes or failure
+                                    progressDialog.dismiss()
+
+                                    showAlertDialog(requireContext())
+
+
+                                    //go to login frag and allow only the users who have verified their email
+                                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+
 
                                 }else{
+
+                                    //dismiss the progressDialog after a successes or failure
+                                    progressDialog.dismiss()
+
+                                    //empty the text inputs
+                                    binding.etName.text = null
+                                    binding.etEmailAddress.text = null
+                                    binding.etPassword.text = null
+                                    binding.etConfirmPassword.text = null
+
+
                                     showLongToast(requireContext(), "Registration failed due to: ${task.exception?.message}")
 
                                 }
@@ -108,7 +141,7 @@ class RegisterFragment() : Fragment() {
                                 viewLifecycleOwner) { message ->
                                     showLongToast(requireContext(), message)
 
-                                    Log.d("Firestore Reg State::", it.toString())
+                                    Log.d("Firestore Reg State::", message.toString())
                                 }
 
 

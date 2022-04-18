@@ -1,5 +1,6 @@
 package com.example.taskkeeperandanalyzer.ui
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         //bottom nav background null
         binding.bottomNavView.background = null
+
+
+
+
 
         //set up the toolbar
         val toolBar = binding.mainActivityToolbar
