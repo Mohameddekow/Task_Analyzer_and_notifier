@@ -15,4 +15,7 @@
     <string name="please_visit_your_gmail_and_click_the_link_we_have_sent_during_registration">Please visit your Gmail and click the link we have sent during registration</string>
     <string name="open_gmail">open Gmail</string>
     <string name="dismiss">dismiss</string>
+    <string name="task_keeper_amp_analyzer"><![CDATA[Task  Analyzer]]></string>
+    <string name="submit">Submit</string>
+    <string name="please_enter_the_email_address_your_registered_with_we_will_send_you_an_email_to_reset_your_password">Please enter the email address your registered with we will send you an email to reset your password</string>
 </resources>

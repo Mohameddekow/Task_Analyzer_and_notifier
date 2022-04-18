@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
@@ -47,17 +48,13 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+        }
 
         //log in logic
         binding.apply {
             btnLogin.setOnClickListener {
-
-                val progressDialog = showProgressDialog(
-                    requireContext(),
-                    "Logging in",
-                    "Authentication is loading, please wait..."
-                )
-
 
 
                 val email = etEmailAddress.text.toString().trim()
@@ -77,8 +74,10 @@ class LoginFragment : Fragment() {
                     }
                     else -> {
 
-                        //show the progressDialog on loading
-                        progressDialog.show()
+                        //disable btn login
+                        binding.btnLogin.alpha = 0.6F
+                        binding.progressBar.isVisible = true
+                        binding.btnLogin.isEnabled = false
 
 
                         // dismiss keyboard
@@ -98,19 +97,25 @@ class LoginFragment : Fragment() {
                                         //show success toast
                                         showLongToast(requireContext(), "Login successful")
 
-                                        //dismiss the progressDialog after a successes or failure
-                                        progressDialog.dismiss()
+                                        //re enable btn login on success
+                                        binding.btnLogin.alpha = 1F
+                                        binding.progressBar.isVisible = false
+                                        binding.btnLogin.isEnabled = true
 
                                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
 
                                     } else {
-                                        //dismiss the progressDialog after a successes or failure
-                                        progressDialog.dismiss()
                                         showAlertDialog(requireContext())
 
                                         //empty the text inputs
                                         binding.etEmailAddress.text = null
                                         binding.etPassword.text = null
+
+
+                                        //re enable btn login on failure
+                                        binding.btnLogin.alpha = 1F
+                                        binding.progressBar.isVisible = false
+                                        binding.btnLogin.isEnabled = true
 
                                         showLongToast(
                                             requireContext(),
@@ -120,8 +125,10 @@ class LoginFragment : Fragment() {
 
                                 } else {
 
-                                    //dismiss the progressDialog after a successes or failure
-                                    progressDialog.dismiss()
+                                    //re enable btn login on failure
+                                    binding.btnLogin.alpha = 1F
+                                    binding.progressBar.isVisible = false
+                                    binding.btnLogin.isEnabled = true
 
                                     //show failed toast
                                     showLongToast(
