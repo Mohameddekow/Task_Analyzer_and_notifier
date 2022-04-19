@@ -1,6 +1,5 @@
 package com.example.taskkeeperandanalyzer.auth.login
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -16,7 +15,6 @@ import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.databinding.FragmentLoginBinding
 import com.example.taskkeeperandanalyzer.utils.showAlertDialog
 import com.example.taskkeeperandanalyzer.utils.showLongToast
-import com.example.taskkeeperandanalyzer.utils.showProgressDialog
 import com.example.taskkeeperandanalyzer.utils.showShortToast
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint

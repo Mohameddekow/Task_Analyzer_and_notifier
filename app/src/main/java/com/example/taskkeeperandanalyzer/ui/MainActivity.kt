@@ -97,6 +97,20 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.profileFragment -> {
                     bottomNavAppBar.isVisible = false
+                    supportActionBar?.show()
+
+
+                }
+                R.id.editProfileFragment -> {
+                    bottomNavAppBar.isVisible = false
+
+                }
+                R.id.currentPasswordFragment -> {
+                    bottomNavAppBar.isVisible = false
+
+                }
+                R.id.changePasswordFragment -> {
+                    bottomNavAppBar.isVisible = false
 
                 }
                 R.id.addTaskFragment -> {

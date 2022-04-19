@@ -31,6 +31,9 @@ class ProfileFragment(): Fragment() {
         //set up profile menu items
         setHasOptionsMenu(true)
 
+        binding.changePasswordTv.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_currentPasswordFragment)
+        }
 
         binding.editProfileBtn.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)

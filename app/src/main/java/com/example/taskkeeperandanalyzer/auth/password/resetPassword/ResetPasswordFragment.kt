@@ -1,4 +1,4 @@
-package com.example.taskkeeperandanalyzer.auth.password
+package com.example.taskkeeperandanalyzer.auth.password.resetPassword
 
 import android.content.Context
 import android.os.Bundle
@@ -12,25 +12,20 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
-import com.example.taskkeeperandanalyzer.constants.USERSROOTREF
+import com.example.taskkeeperandanalyzer.auth.password.PasswordViewModel
 import com.example.taskkeeperandanalyzer.databinding.FragmentResetPasswordBinding
 import com.example.taskkeeperandanalyzer.utils.showLongToast
 import com.example.taskkeeperandanalyzer.utils.showResetPasswordAlertDialog
 import com.example.taskkeeperandanalyzer.utils.showShortToast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ResetPasswordFragment : Fragment(){
     private var _binding: FragmentResetPasswordBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var fireStoreDb: FirebaseFirestore
 
-    private val resetPasswordViewModel by viewModels<ResetPasswordViewModel>()
+    private val passwordViewModel by viewModels<PasswordViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +61,7 @@ class ResetPasswordFragment : Fragment(){
                         inputManager.hideSoftInputFromWindow(binding.btnSubmit.windowToken, 0)
 
 
-                        resetPasswordViewModel.resetPassword(email).addOnCompleteListener { task ->
+                        passwordViewModel.resetPassword(email).addOnCompleteListener { task ->
                             if (task.isSuccessful){
 
                                 showResetPasswordAlertDialog(requireContext())

@@ -9,9 +9,10 @@
 
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="310dp"
+        android:layout_height="234dp"
         android:layout_marginTop="112dp"
+        android:scaleType="fitXY"
         android:src="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,10 +22,10 @@
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"
-        android:minWidth="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Name"
+        android:minWidth="200dp"
+        android:text="@string/full_name"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/profileImage"
@@ -34,11 +35,11 @@
 
     <TextView
         android:id="@+id/tvEmail"
-        android:minWidth="200dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Email"
+        android:minWidth="200dp"
+        android:text="@string/email_address"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/profileImage"
@@ -49,13 +50,59 @@
     <Button
         android:id="@+id/editProfileBtn"
         android:layout_width="0dp"
-        android:maxWidth="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="edit profile"
+        android:layout_marginTop="20dp"
+        android:maxWidth="250dp"
+        android:text="@string/edit_profile"
         app:layout_constraintEnd_toEndOf="@+id/tvEmail"
         app:layout_constraintStart_toStartOf="@+id/tvEmail"
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/privacy_settings"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvEmail"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/changePasswordTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/change_passwords"
+        android:textSize="23sp"
+        android:padding="4dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePasswordTv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

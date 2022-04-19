@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.constants.USERSROOTREF
@@ -19,9 +18,7 @@ import com.example.taskkeeperandanalyzer.utils.showAlertDialog
 import com.example.taskkeeperandanalyzer.utils.showLongToast
 import com.example.taskkeeperandanalyzer.utils.showProgressDialog
 import com.example.taskkeeperandanalyzer.utils.showShortToast
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

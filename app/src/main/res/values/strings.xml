@@ -18,4 +18,13 @@
     <string name="task_keeper_amp_analyzer"><![CDATA[Task  Analyzer]]></string>
     <string name="submit">Submit</string>
     <string name="please_enter_the_email_address_your_registered_with_we_will_send_you_an_email_to_reset_your_password">Please enter the email address your registered with we will send you an email to reset your password</string>
+    <string name="change_password">Change Password?</string>
+    <string name="please_enter_your_current_password">Please enter your current password.</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="please_enter_your_new_password">Please enter your new password</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="privacy_settings">Privacy settings</string>
+    <string name="change_passwords">Change Password</string>
 </resources>

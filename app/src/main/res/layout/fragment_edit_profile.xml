@@ -7,8 +7,7 @@
     tools:context=".ui.profile.EditProfileFragment">
 
 
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,19 +18,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <EditText
-        android:id="@+id/etName"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:minWidth="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/profileImage"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="@id/profileImage"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/profileImage"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_round_person"
+            android:drawablePadding="6dp"
+            android:fontFamily="monospace"
+            android:hint="@string/full_name"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tvEmail"
@@ -45,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="@+id/profileImage"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/profileImage"
-        app:layout_constraintTop_toBottomOf="@+id/etName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <Button
         android:id="@+id/updateProfileBtn"
