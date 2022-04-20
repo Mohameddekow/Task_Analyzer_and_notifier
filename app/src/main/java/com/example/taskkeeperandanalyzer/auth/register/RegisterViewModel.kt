@@ -22,9 +22,10 @@ class RegisterViewModel @Inject constructor(
         name: String,
         email: String,
         password: String,
-        usersRootRef: String
+        usersRootRef: String,
+        profileUrl: String
     ): Task<AuthResult> {
-        return repository.registerUser(name, email, password, usersRootRef)
+        return repository.registerUser(name, email, password, usersRootRef, profileUrl)
     }
 
 

@@ -9,8 +9,19 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.taskkeeperandanalyzer.R
 
+
+fun loadImageWithGlide(url: String, context: Context, view: ImageView){
+    val option = RequestOptions().placeholder(R.drawable.profile)
+        .error(R.drawable.profile)
+    Glide.with(context)
+        .setDefaultRequestOptions(option)
+        .load(url)
+        .into(view)
+}
 
 fun showShortToast(context: Context, message: String){
     Toast.makeText(context, message,Toast.LENGTH_SHORT).show()

@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
-import com.example.taskkeeperandanalyzer.constants.USERSROOTREF
+import com.example.taskkeeperandanalyzer.constants.USERS_ROOT_REF
 import com.example.taskkeeperandanalyzer.databinding.FragmentRegisterBinding
 import com.example.taskkeeperandanalyzer.utils.showAlertDialog
 import com.example.taskkeeperandanalyzer.utils.showLongToast
@@ -101,7 +101,8 @@ class RegisterFragment() : Fragment() {
 
 
                             //register user and after a successful reg go to home frag
-                            registerViewModel.registerUser(name, email, password, USERSROOTREF).addOnCompleteListener { task ->
+                            val profileUrl = "" //at first the profile path is null
+                            registerViewModel.registerUser(name, email, password, USERS_ROOT_REF, profileUrl).addOnCompleteListener { task ->
                                 if (task.isSuccessful){
                                     showLongToast(requireContext(), "Registration successful")
 

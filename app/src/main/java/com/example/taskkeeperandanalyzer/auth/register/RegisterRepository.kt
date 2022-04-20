@@ -34,7 +34,8 @@ class RegisterRepository
         name: String,
         email: String,
         password: String,
-        usersRootRef: String
+        usersRootRef: String,
+        profileUrl: String
     ): Task<AuthResult> {
 
           return  auth.createUserWithEmailAndPassword(email, password)
@@ -52,7 +53,7 @@ class RegisterRepository
 
                                     //add the registered user to  firestore
                                     firebaseFirestoreDb.collection(usersRootRef).document(uid)
-                                        .set(UserModel(name, email)).addOnCompleteListener {
+                                        .set(UserModel(name, email, profileUrl)).addOnCompleteListener {
                                             if (task.isSuccessful) {
                                                 Log.d("added to fireStore:", task.isSuccessful.toString())
 

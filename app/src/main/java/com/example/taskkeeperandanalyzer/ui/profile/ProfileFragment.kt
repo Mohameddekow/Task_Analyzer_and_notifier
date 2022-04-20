@@ -1,11 +1,19 @@
 package com.example.taskkeeperandanalyzer.ui.profile
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
+import com.example.taskkeeperandanalyzer.constants.USERS_ROOT_REF
 import com.example.taskkeeperandanalyzer.databinding.FragmentProfileBinding
+import com.example.taskkeeperandanalyzer.utils.loadImageWithGlide
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -14,7 +22,11 @@ import javax.inject.Inject
 class ProfileFragment(): Fragment() {
 
     //auth injection
-    @Inject lateinit var auth: FirebaseAuth  //field inject
+    @Inject
+    lateinit var auth: FirebaseAuth  //field inject
+
+    private val profileViewModel by viewModels<ProfileViewModel>()
+
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -39,20 +51,45 @@ class ProfileFragment(): Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+
+
+
+        binding.apply {
+
+
+            val userId = auth.currentUser?.uid
+            if (userId != null) {
+                profileViewModel.fetchUserDetails(USERS_ROOT_REF, userId)
+
+            }
+
+
+            profileViewModel.userDetails.observe(viewLifecycleOwner){  userModel ->
+                tvName.text = userModel.name
+                tvEmail.text = userModel.email
+
+                userModel.profileUrl?.let {
+                    loadImageWithGlide(it, requireContext(), profileImage)
+                }
+            }
+
+        }
+
+
         return binding.root
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.profile_menu,menu)
+        inflater.inflate(R.menu.profile_menu, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
-            R.id.logoutUser ->{
+        when (item.itemId) {
+            R.id.logoutUser -> {
                 //logout a user
                 //initialize
 //                auth = FirebaseAuth.getInstance()
@@ -65,7 +102,6 @@ class ProfileFragment(): Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
     override fun onDestroyView() {
