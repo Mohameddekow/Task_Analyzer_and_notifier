@@ -43,6 +43,8 @@ class EditProfileFragment : Fragment() {
 
     private var photoUri: Uri? = null
 
+    private lateinit var initialName: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +53,10 @@ class EditProfileFragment : Fragment() {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
 
         binding.profileImage.setOnClickListener {
+            //pick image
+            pickImageFromGallery()
+        }
+        binding.addPhoto.setOnClickListener {
             //pick image
             pickImageFromGallery()
         }
@@ -80,7 +86,7 @@ class EditProfileFragment : Fragment() {
         }
 
 
-        //log in logic
+        //profile edit
         binding.apply {
 
             val showProgressDialog = showProgressDialog(
@@ -120,43 +126,102 @@ class EditProfileFragment : Fragment() {
 
                         val userId = auth.currentUser?.uid
 
-                        val photoUploadUri = photoUri as Uri
+                        val photoUploadUri = photoUri as Uri?
 
-                        if (userId != null) {
-                            editProfileViewModel.updateUserProfile(
-                                name,
-                                userId,
-                                USERS_ROOT_REF,
-                                photoUploadUri,
-                                PROFILE_IMAGES_ROOT_REF
-                            )?.addOnCompleteListener { task ->
-                                if (task.isSuccessful){
-                                    showShortToast(requireContext(), "profile updated successfully")
-                                    findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+                        //check if user selected an image
+                        //if no image selected update only the name
+                        //otherwise update all his details
 
-                                    //enable btn btn update on success
-                                    binding.updateProfileBtn.isEnabled = true
+                        if (photoUploadUri == null){
+                            //if no image selected update the name only
+                            //check if user made any changes to his name
 
-                                    //dismiss on success
-                                    showProgressDialog.dismiss()
-
-                                }else{
+                            //if he made no change tel him no change made
+                            //initialize  i#initialName
+                             editProfileViewModel.userDetails.observe(viewLifecycleOwner){
+                                 initialName = it.name.toString()
+                            }
+                            if (name == initialName){
+                                showLongToast(requireContext(), "You have made no changes.")
+                                //enable btn btn update on failure
+                                binding.updateProfileBtn.isEnabled = true
 
 
-                                    //enable btn btn update on failure
-                                    binding.updateProfileBtn.isEnabled = true
+                                //dismiss on failure
+                                showProgressDialog.dismiss()
+
+                                return@setOnClickListener
+                            }else{
+                                //otherwise update user profile name
+                                if (userId != null){
+                                    editProfileViewModel.updateUserProfileNameOnly(name, userId, USERS_ROOT_REF)
+                                        .addOnCompleteListener { task ->
+                                            if (task.isSuccessful){
+
+                                                showShortToast(requireContext(), "profile name updated successfully")
+                                                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
+                                                //enable btn btn update on success
+                                                binding.updateProfileBtn.isEnabled = true
+
+                                                //dismiss on success
+                                                showProgressDialog.dismiss()
+
+                                            }else{
+
+                                                //enable btn btn update on failure
+                                                binding.updateProfileBtn.isEnabled = true
 
 
-                                    //dismiss on failure
-                                    showProgressDialog.dismiss()
+                                                //dismiss on failure
+                                                showProgressDialog.dismiss()
 
-                                    showShortToast(requireContext(), "${task.exception?.message}")
-
+                                                showLongToast(requireContext(), "${task.exception?.message}")
+                                            }
+                                        }
                                 }
                             }
+
+                        }else{
+                            //update all user profile details
+
+                            if (userId != null) {
+                                editProfileViewModel.updateAllUserProfileDetails(
+                                    name,
+                                    userId,
+                                    USERS_ROOT_REF,
+                                    photoUploadUri,
+                                    PROFILE_IMAGES_ROOT_REF
+                                ).addOnCompleteListener { task ->
+                                    if (task.isSuccessful){
+                                        showShortToast(requireContext(), "profile updated successfully")
+                                        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
+                                        //enable btn btn update on success
+                                        binding.updateProfileBtn.isEnabled = true
+
+                                        //dismiss on success
+                                        showProgressDialog.dismiss()
+
+                                    }else{
+
+
+                                        //enable btn btn update on failure
+                                        binding.updateProfileBtn.isEnabled = true
+
+
+                                        //dismiss on failure
+                                        showProgressDialog.dismiss()
+
+                                        showLongToast(requireContext(), "${task.exception?.message}")
+
+                                    }
+                                }
+
+                            }
+
+
                         }
-
-
 
                     }
                 }

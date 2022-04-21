@@ -26,20 +26,31 @@ class ProfileViewModel @Inject constructor(
 
 
     //update user profile
-    fun updateUserProfile(
+    fun updateAllUserProfileDetails(
         name: String,
         userId: String,
         usersPathRef: String,
-        photoUri: Uri?,
+        photoUri: Uri,
         profileImagesRootRef: String
-    ): Task<Void>? {
-        return repository.updateUserProfile(
+    ): Task<Void> {
+        return repository.updateAllUserProfileDetails(
             name,
             userId,
             usersPathRef,
             photoUri,
             profileImagesRootRef)
     }
+
+    //update user profile name only
+    fun updateUserProfileNameOnly(
+        name: String,
+        userId: String,
+        usersPathRef: String
+    ): Task<Void> {
+        return repository.updateUserProfileNameOnly(name, userId, usersPathRef)
+    }
+
+
 
 
     //fetch user details
@@ -61,6 +72,7 @@ class ProfileViewModel @Inject constructor(
                  _userDetails.postValue(user!!)
 
              }
+
 
 
 

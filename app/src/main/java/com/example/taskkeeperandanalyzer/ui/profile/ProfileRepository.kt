@@ -10,7 +10,9 @@ import com.google.firebase.storage.FirebaseStorage
 import javax.inject.Inject
 
 
-class ProfileRepository @Inject constructor(
+class ProfileRepository
+@Inject
+constructor(
     private val firebaseStorage: FirebaseStorage,
     private val auth: FirebaseAuth,
     private val fireStoreDb: FirebaseFirestore
@@ -19,20 +21,19 @@ class ProfileRepository @Inject constructor(
 
 
 
-    //update user details
-    fun updateUserProfile(
+    //update add user details , pic and names
+    fun updateAllUserProfileDetails(
         name: String,
         userId: String,
         usersPathRef: String,
-        photoUri: Uri?,
+        photoUri: Uri,
         profileImagesRootRef: String
-    ): Task<Void>? {
+    ): Task<Void>{
 
         val email = auth.currentUser?.email
         val photoStoragePathRef = firebaseStorage.reference.child("${profileImagesRootRef}/${userId}")
 
-        return photoUri?.let {
-            photoStoragePathRef.putFile(it)
+        return photoStoragePathRef.putFile(photoUri)
                 .continueWithTask { photoUploadTask ->
                     photoStoragePathRef.downloadUrl //makes the download url available
                 }
@@ -44,7 +45,20 @@ class ProfileRepository @Inject constructor(
                     fireStoreDb.collection(usersPathRef).document(userId)
                         .set(UserModel(name, email!!, downloadUrl))
                 }
-        }
+    }
+
+
+
+
+    //update user profile name only
+    fun updateUserProfileNameOnly(
+        name: String,
+        userId: String,
+        usersPathRef: String
+    ): Task<Void> {
+
+        return fireStoreDb.collection(usersPathRef).document(userId).update("name", name)
+
     }
 
 
