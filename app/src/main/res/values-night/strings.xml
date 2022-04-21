@@ -22,4 +22,5 @@
     <string name="please_enter_your_new_password">Please enter your new password</string>
     <string name="authenticate">Authenticate</string>
     <string name="privacy_settings">Privacy settings</string>
+    <string name="task_keeper_and_analyzer">Task Keeper And Analyzer</string>
 </resources>
