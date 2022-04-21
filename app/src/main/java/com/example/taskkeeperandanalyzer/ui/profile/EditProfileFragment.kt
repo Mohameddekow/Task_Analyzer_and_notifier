@@ -59,6 +59,7 @@ class EditProfileFragment : Fragment() {
         binding.addPhoto.setOnClickListener {
             //pick image
             pickImageFromGallery()
+
         }
 
 
@@ -242,6 +243,12 @@ class EditProfileFragment : Fragment() {
         imagePickerIntent.type = "image/*"
 
         startActivityForResult(imagePickerIntent, PICK_IMAGE_CODE)
+
+        // dismiss keyboard
+        val inputManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.updateProfileBtn.windowToken, 0)
+
 
     }
 
