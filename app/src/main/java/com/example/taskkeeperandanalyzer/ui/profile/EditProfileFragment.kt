@@ -245,9 +245,9 @@ class EditProfileFragment : Fragment() {
         startActivityForResult(imagePickerIntent, PICK_IMAGE_CODE)
 
         //dismiss keyboard
-//        val inputManager =
-//            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputManager.hideSoftInputFromWindow(binding.updateProfileBtn.windowToken, 0)
+        val inputManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.updateProfileBtn.windowToken, 0)
 
 
     }
