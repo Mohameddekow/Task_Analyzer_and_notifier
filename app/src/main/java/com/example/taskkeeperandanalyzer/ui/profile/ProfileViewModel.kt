@@ -21,7 +21,9 @@ import kotlin.Exception
 
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+class ProfileViewModel
+@Inject
+constructor(
     private val  repository: ProfileRepository
 ): ViewModel() {
 
