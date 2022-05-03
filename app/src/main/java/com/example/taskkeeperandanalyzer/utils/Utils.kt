@@ -6,12 +6,18 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.ViewCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.taskkeeperandanalyzer.R
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 
 
 fun loadImageWithGlide(url: String, context: Context, view: ImageView){
@@ -38,7 +44,6 @@ fun showProgressDialog(context: Context, title: String, message: String): Progre
     progressDialog.setCanceledOnTouchOutside(false)
     return progressDialog
 }
-
 
 
 //alert dialog for password reset

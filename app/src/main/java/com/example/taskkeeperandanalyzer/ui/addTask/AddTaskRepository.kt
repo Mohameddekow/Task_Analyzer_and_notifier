@@ -1,17 +1,15 @@
 package com.example.taskkeeperandanalyzer.ui.addTask
 
 import android.util.Log
-import com.example.taskkeeperandanalyzer.model.AddTaskModel
+import com.example.taskkeeperandanalyzer.model.TaskModel
 import com.example.taskkeeperandanalyzer.utils.Resource
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import java.util.*
 import javax.inject.Inject
 
 
@@ -20,12 +18,6 @@ class AddTaskRepository
 constructor(
     private val fireStoreDb: FirebaseFirestore
 ){
-
-    //Getting the current date
-    private var date: Date = Date()
-
-    //This method returns the time in millis
-    private var timeMilli: Long = date.getTime()
 
     suspend fun addTaskToFireStore(
         userId: String,
@@ -44,7 +36,7 @@ constructor(
 
             val task = fireStoreDb.collection(taskRootRef).document(userId).collection(userId) // from taskRet/uid/uid
                 .document() //auto generated document ref
-                .set(AddTaskModel(title, desc, remainderTime, taskType))
+                .set(TaskModel(title, desc, remainderTime, taskType, System.currentTimeMillis()))
 
 
             task.addOnSuccessListener {

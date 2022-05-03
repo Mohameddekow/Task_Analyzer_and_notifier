@@ -40,4 +40,5 @@
     <string name="note_taking">Note taking</string>
     <string name="date">date</string>
     <string name="time">time</string>
+    <string name="due_time">due time:</string>
 </resources>
