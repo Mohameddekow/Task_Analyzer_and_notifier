@@ -130,7 +130,8 @@
 
                 <RadioButton
                     android:id="@+id/gymRemainder"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
                     android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="@string/gym_remainder"
@@ -139,7 +140,8 @@
 
                 <RadioButton
                     android:id="@+id/developerEvent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
                     android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="@string/developer_events"
@@ -148,7 +150,8 @@
 
                 <RadioButton
                     android:id="@+id/androidSessions"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
                     android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="@string/android_session"
@@ -157,7 +160,8 @@
 
                 <RadioButton
                     android:id="@+id/interview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
                     android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="@string/interview_remainder"
@@ -167,7 +171,8 @@
 
                 <RadioButton
                     android:id="@+id/noteTaking"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="80dp"
                     android:layout_height="40dp"
                     android:padding="10dp"
                     android:text="@string/note_taking"
