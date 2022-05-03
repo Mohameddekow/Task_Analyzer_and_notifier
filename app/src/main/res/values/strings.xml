@@ -28,4 +28,16 @@
     <string name="privacy_settings">Privacy settings</string>
     <string name="change_passwords">Change Password</string>
     <string name="task_keeper_and_analyzer">Task Keeper And Analyzer</string>
+    <string name="add_task">add task</string>
+    <string name="title">Title</string>
+    <string name="description">description</string>
+    <string name="task_type">task type</string>
+    <string name="schedule_a_remainder_time">schedule a remainder time</string>
+    <string name="gym_remainder">Gym remainder</string>
+    <string name="developer_events">Developer events</string>
+    <string name="android_session">Android session</string>
+    <string name="interview_remainder">Interview remainder</string>
+    <string name="note_taking">Note taking</string>
+    <string name="date">date</string>
+    <string name="time">time</string>
 </resources>

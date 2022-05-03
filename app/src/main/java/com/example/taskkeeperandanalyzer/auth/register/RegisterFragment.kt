@@ -1,5 +1,6 @@
 package com.example.taskkeeperandanalyzer.auth.register
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -35,6 +36,7 @@ class RegisterFragment() : Fragment() {
 
 //    private val registerViewModel: RegisterViewModel by viewModels() // u can do this as well
 
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +58,7 @@ class RegisterFragment() : Fragment() {
 
 
 
-                val progressDialog = showProgressDialog(
+                progressDialog = showProgressDialog(
                     requireContext(),
                     "Registration",
                     "Registration is loading, please wait..."
@@ -94,7 +96,6 @@ class RegisterFragment() : Fragment() {
                             //show the progressDialog on loading
                             progressDialog.show()
 
-
                             // dismiss keyboard
                             val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                             inputManager.hideSoftInputFromWindow(binding.btnRegister.windowToken, 0)
@@ -102,52 +103,26 @@ class RegisterFragment() : Fragment() {
 
                             //register user and after a successful reg go to home frag
                             val profileUrl = "" //at first the profile path is null
-                            registerViewModel.registerUser(name, email, password, USERS_ROOT_REF, profileUrl).addOnCompleteListener { task ->
-                                if (task.isSuccessful){
-                                    showLongToast(requireContext(), "Registration successful")
-
-                                    //dismiss the progressDialog after a successes or failure
-                                    progressDialog.dismiss()
-
-                                    showAlertDialog(requireContext())
-
-
-                                    //go to login frag and allow only the users who have verified their email
-                                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-
-
-                                }else{
-
-                                    //dismiss the progressDialog after a successes or failure
-                                    progressDialog.dismiss()
-
-                                    //empty the text inputs
-                                    binding.etName.text = null
-                                    binding.etEmailAddress.text = null
-                                    binding.etPassword.text = null
-                                    binding.etConfirmPassword.text = null
-
-
-                                    showLongToast(requireContext(), "Registration failed due to: ${task.exception?.message}")
-
-                                }
+                            registerViewModel.registerUser(name, email, password, USERS_ROOT_REF, profileUrl)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful){
+                                        showAlertDialog(requireContext())
+                                        showSuccessChanges("Registration successful")
+                                    }else{
+                                        showErrorChanges(task.exception?.message.toString())
+                                    }
                             }
-
 
                             //show fireStore reg state
                             registerViewModel.firestoreRegState.observe(
                                 viewLifecycleOwner) { message ->
                                     showLongToast(requireContext(), message)
-
                                     Log.d("Firestore Reg State::", message.toString())
                                 }
 
 
                         } else {
-
                             showShortToast(requireContext(), "the passwords aren't the same")
-
-
                         }
 
                     }
@@ -158,6 +133,30 @@ class RegisterFragment() : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showErrorChanges(message: String) {
+        //dismiss the progressDialog after a successes or failure
+        progressDialog.dismiss()
+
+        //empty the text inputs
+        binding.etName.text = null
+        binding.etEmailAddress.text = null
+        binding.etPassword.text = null
+        binding.etConfirmPassword.text = null
+
+        showLongToast(requireContext(), message)
+    }
+
+    private fun showSuccessChanges(message: String) {
+        showLongToast(requireContext(), message)
+
+        //dismiss the progressDialog after a successes or failure
+        progressDialog.dismiss()
+
+        //go to login frag and allow only the users who have verified their email
+        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+
     }
 
 

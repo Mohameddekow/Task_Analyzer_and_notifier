@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskkeeperandanalyzer.R
 import com.example.taskkeeperandanalyzer.constants.USERS_ROOT_REF
 import com.example.taskkeeperandanalyzer.databinding.FragmentProfileBinding
+import com.example.taskkeeperandanalyzer.utils.Resource
 import com.example.taskkeeperandanalyzer.utils.loadImageWithGlide
+import com.example.taskkeeperandanalyzer.utils.showLongToast
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -56,21 +58,34 @@ class ProfileFragment(): Fragment() {
 
         binding.apply {
 
-
             val userId = auth.currentUser?.uid
             if (userId != null) {
                 profileViewModel.fetchUserDetails(USERS_ROOT_REF, userId)
-
             }
 
+            profileViewModel.userDetails.observe(viewLifecycleOwner){  result ->
 
-            profileViewModel.userDetails.observe(viewLifecycleOwner){  userModel ->
-                tvName.text = userModel.name
-                tvEmail.text = userModel.email
+                progressBar.isVisible = result is Resource.Loading  //show only when state is *Loading
 
-                userModel.profileUrl?.let {
-                    loadImageWithGlide(it, requireContext(), profileImage)
+                when(result){
+                    is Resource.Success -> {
+                        tvName.text = result.data?.name
+                        tvEmail.text = result.data?.email
+
+                        result.data?.profileUrl?.let {
+                            loadImageWithGlide(it, requireContext(), profileImage)
+                        }
+
+                    }
+
+                    is Resource.Error -> {
+                        showLongToast(requireContext(), result.error.toString())
+                    }
+                    else -> {
+                        //show nothing
+                    }
                 }
+
             }
 
         }

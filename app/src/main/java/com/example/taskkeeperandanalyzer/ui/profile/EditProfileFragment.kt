@@ -1,11 +1,11 @@
 package com.example.taskkeeperandanalyzer.ui.profile
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,10 +21,7 @@ import com.example.taskkeeperandanalyzer.constants.PICK_IMAGE_CODE
 import com.example.taskkeeperandanalyzer.constants.PROFILE_IMAGES_ROOT_REF
 import com.example.taskkeeperandanalyzer.constants.USERS_ROOT_REF
 import com.example.taskkeeperandanalyzer.databinding.FragmentEditProfileBinding
-import com.example.taskkeeperandanalyzer.utils.loadImageWithGlide
-import com.example.taskkeeperandanalyzer.utils.showLongToast
-import com.example.taskkeeperandanalyzer.utils.showProgressDialog
-import com.example.taskkeeperandanalyzer.utils.showShortToast
+import com.example.taskkeeperandanalyzer.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,6 +42,7 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var initialName: String
 
+    private lateinit var showProgressDialog: ProgressDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,48 +60,66 @@ class EditProfileFragment : Fragment() {
 
         }
 
+        //progressDialog to show on updating profile
+        showProgressDialog = showProgressDialog(
+            requireContext(),
+            "Updating profile",
+            "Update is in progress. Please wait..."
+        )
+
+
 
 
         //retrieve user details
         binding.apply {
 
-
             val userId = auth.currentUser?.uid
             if (userId != null) {
                 editProfileViewModel.fetchUserDetails(USERS_ROOT_REF, userId)
-
             }
 
+            editProfileViewModel.userDetails.observe(viewLifecycleOwner){  result ->
 
-            editProfileViewModel.userDetails.observe(viewLifecycleOwner){  userModel ->
-                etName.setText(userModel.name)
-                tvEmail.text = userModel.email
+                progressBar.isVisible = result is Resource.Loading  //show only when state is *Loading
 
-                userModel.profileUrl?.let {
-                    loadImageWithGlide(it, requireContext(), profileImage)
+                when(result){
+                    is Resource.Success -> {
+                        etName.setText(result.data?.name)
+                        tvEmail.text = result.data?.email
+
+                        result.data?.profileUrl?.let {
+                            loadImageWithGlide(it, requireContext(), profileImage)
+                        }
+
+
+                        //initialize the initial name on success
+                        initialName = result.data?.name.toString()
+
+                    }
+
+                    is Resource.Error -> {
+                        showLongToast(requireContext(), result.error.toString())
+                    }
+                    else -> {
+                        //show nothing
+                    }
                 }
-            }
 
+            }
         }
 
 
         //profile edit
         binding.apply {
 
-            val showProgressDialog = showProgressDialog(
-                requireContext(),
-                "Updating profile",
-                "Update is in progress. Please wait..."
-            )
-
             updateProfileBtn.setOnClickListener {
 
 
-                val name = etName.text.toString().trim()
+                val newName = etName.text.toString().trim()
 
                 when {
 
-                    TextUtils.isEmpty(name) -> {
+                    TextUtils.isEmpty(newName) -> {
                         showShortToast(requireContext(), "name field can't be empty")
                     }
 
@@ -129,100 +145,86 @@ class EditProfileFragment : Fragment() {
 
                         val photoUploadUri = photoUri as Uri?
 
-                        //check if user selected an image
-                        //if no image selected update only the name
-                        //otherwise update all his details
 
-                        if (photoUploadUri == null){
-                            //if no image selected update the name only
-                            //check if user made any changes to his name
+                        //@TODO when
+                        ////////@TODO profileUri == null and initialName == newName // **make no change
+                        ////////@TODO profileUri == null and initialName != newName // **update  name only
 
-                            //if he made no change tel him no change made
-                            //initialize  i#initialName
-                             editProfileViewModel.userDetails.observe(viewLifecycleOwner){
-                                 initialName = it.name.toString()
-                            }
-                            if (name == initialName){
-                                showLongToast(requireContext(), "You have made no changes.")
-                                //enable btn btn update on failure
-                                binding.updateProfileBtn.isEnabled = true
+                        ////////@TODO profileUri != null and initialName != newName   // **updateAllProfileDetails
+                        ////////@TODO profileUri != null and initialName == newName   // **updateAllProfileDetails
 
 
-                                //dismiss on failure
-                                showProgressDialog.dismiss()
+                        ////@TODO all this task should only happen when the user is not null **AND  have **internet connection**
 
-                                return@setOnClickListener
-                            }else{
-                                //otherwise update user profile name
-                                if (userId != null){
-                                    editProfileViewModel.updateUserProfileNameOnly(name, userId, USERS_ROOT_REF)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful){
+                        if (userId != null){
 
-                                                showShortToast(requireContext(), "profile name updated successfully")
-                                                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+                            ////@TODO user should  have **internet connection first**
+                                if (isInternetAvailable(requireContext())){
 
-                                                //enable btn btn update on success
-                                                binding.updateProfileBtn.isEnabled = true
+                                    if (photoUploadUri == null && initialName == newName) {
 
-                                                //dismiss on success
-                                                showProgressDialog.dismiss()
+                                        showErrorChanges("You have made no changes.")
 
-                                            }else{
+                                        return@setOnClickListener
+                                    }else if (photoUploadUri == null && initialName != newName) {
+                                        //update profile name only
+                                        editProfileViewModel.updateUserProfileNameOnly(newName, userId, USERS_ROOT_REF)
 
-                                                //enable btn btn update on failure
-                                                binding.updateProfileBtn.isEnabled = true
+                                        editProfileViewModel.userNameUpdatingState.observe(viewLifecycleOwner){ task ->
 
+                                            progressBar.isVisible = task is Resource.Loading
 
-                                                //dismiss on failure
-                                                showProgressDialog.dismiss()
+                                            when(task){
+                                                is Resource.Success ->{
+                                                    showSuccessChanges("name updated successfully")
+                                                }
 
-                                                showLongToast(requireContext(), "${task.exception?.message}")
+                                                is Resource.Error ->{
+                                                    showErrorChanges(task.error?.message.toString())
+                                                }
+                                                else -> {
+                                                    //do nothing
+                                                }
                                             }
+
                                         }
-                                }
-                            }
 
-                        }else{
-                            //update all user profile details
+                                    }else if (
+                                        (photoUploadUri != null && initialName != newName)
+                                        || (photoUploadUri != null && initialName == newName)
+                                    ){
+                                        //both cases update all profile details
+                                        editProfileViewModel.updateAllUserProfileDetails(
+                                            newName,
+                                            userId,
+                                            USERS_ROOT_REF,
+                                            photoUploadUri,
+                                            PROFILE_IMAGES_ROOT_REF
+                                        )
+                                        editProfileViewModel.updatingAllProfileDetailsState.observe(viewLifecycleOwner){ task ->
+                                            progressBar.isVisible = task is Resource.Loading
 
-                            if (userId != null) {
-                                editProfileViewModel.updateAllUserProfileDetails(
-                                    name,
-                                    userId,
-                                    USERS_ROOT_REF,
-                                    photoUploadUri,
-                                    PROFILE_IMAGES_ROOT_REF
-                                ).addOnCompleteListener { task ->
-                                    if (task.isSuccessful){
-                                        showShortToast(requireContext(), "profile updated successfully")
-                                        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+                                            when(task){
+                                                is Resource.Success ->{
+                                                    showSuccessChanges("profile updated successfully")
+                                                }
 
-                                        //enable btn btn update on success
-                                        binding.updateProfileBtn.isEnabled = true
+                                                is Resource.Error ->{
+                                                   showErrorChanges(task.error?.message.toString())
+                                                }
+                                                else -> {
+                                                    //do nothing
+                                                }
+                                            }
 
-                                        //dismiss on success
-                                        showProgressDialog.dismiss()
-
-                                    }else{
-
-
-                                        //enable btn btn update on failure
-                                        binding.updateProfileBtn.isEnabled = true
-
-
-                                        //dismiss on failure
-                                        showProgressDialog.dismiss()
-
-                                        showLongToast(requireContext(), "${task.exception?.message}")
-
+                                        }
                                     }
+
+                                }else{
+                                    showErrorChanges("No internet connection")
                                 }
-
-                            }
-
-
                         }
+
 
                     }
                 }
@@ -237,7 +239,7 @@ class EditProfileFragment : Fragment() {
     }
 
 
-    //image picking
+    //image picking fun
     private fun pickImageFromGallery() {
         val imagePickerIntent = Intent(Intent.ACTION_GET_CONTENT)
         imagePickerIntent.type = "image/*"
@@ -249,8 +251,8 @@ class EditProfileFragment : Fragment() {
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(binding.updateProfileBtn.windowToken, 0)
 
-
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -260,9 +262,8 @@ class EditProfileFragment : Fragment() {
                 photoUri = data?.data
                 val imageView = binding.profileImage
                 imageView.setImageURI(photoUri)
-//
-//                showLongToast(requireContext(),"photo path is: ${ photoUri.toString()}")
 
+//                showLongToast(requireContext(),"photo path is: ${ photoUri.toString()}")
 
                 Log.d("photo", photoUri.toString())
 
@@ -272,6 +273,18 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+    private fun showSuccessChanges(message: String){
+        showShortToast(requireContext(), message)
+        showProgressDialog.dismiss()
+        binding.updateProfileBtn.isEnabled = true
+        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+    }
+
+    private fun showErrorChanges(message: String){
+        showLongToast(requireContext(),message)
+        showProgressDialog.dismiss()
+        binding.updateProfileBtn.isEnabled = true
+    }
 
     override fun onDestroyView() {
         _binding = null

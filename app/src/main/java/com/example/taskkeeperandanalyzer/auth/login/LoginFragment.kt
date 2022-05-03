@@ -88,52 +88,18 @@ class LoginFragment : Fragment() {
                         loginViewModel.authenticateUser(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-
                                     //check if the user verified his email only then log him  in
                                     val currentUser = auth.currentUser!!
+
                                     if (currentUser.isEmailVerified) {
-                                        //show success toast
-                                        showLongToast(requireContext(), "Login successful")
-
-                                        //re enable btn login on success
-                                        binding.btnLogin.alpha = 1F
-                                        binding.progressBar.isVisible = false
-                                        binding.btnLogin.isEnabled = true
-
-                                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-
+                                        showSuccessChanges()
                                     } else {
                                         showAlertDialog(requireContext())
-
-                                        //empty the text inputs
-                                        binding.etEmailAddress.text = null
-                                        binding.etPassword.text = null
-
-
-                                        //re enable btn login on failure
-                                        binding.btnLogin.alpha = 1F
-                                        binding.progressBar.isVisible = false
-                                        binding.btnLogin.isEnabled = true
-
-                                        showLongToast(
-                                            requireContext(),
-                                            "email verification required"
-                                        )
+                                        showErrorChanges("email verification required")
                                     }
 
                                 } else {
-
-                                    //re enable btn login on failure
-                                    binding.btnLogin.alpha = 1F
-                                    binding.progressBar.isVisible = false
-                                    binding.btnLogin.isEnabled = true
-
-                                    //show failed toast
-                                    showLongToast(
-                                        requireContext(),
-                                        "Login failed due to: ${task.exception?.message}"
-                                    )
-
+                                    showErrorChanges(task.exception?.message.toString())
                                 }
                             }
 
@@ -145,6 +111,34 @@ class LoginFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showErrorChanges(message: String) {
+        //empty the text inputs
+        binding.etEmailAddress.text = null
+        binding.etPassword.text = null
+
+        //re enable btn login on failure
+        binding.btnLogin.alpha = 1F
+        binding.progressBar.isVisible = false
+        binding.btnLogin.isEnabled = true
+
+        showLongToast(
+            requireContext(),
+            message
+        )
+    }
+
+    private fun showSuccessChanges() {
+        //show success toast
+        showLongToast(requireContext(), "Login successful")
+
+        //re enable btn login on success
+        binding.btnLogin.alpha = 1F
+        binding.progressBar.isVisible = false
+        binding.btnLogin.isEnabled = true
+
+        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
     }
 
 
