@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/analyzeFragment"
-        android:name="com.example.taskkeeperandanalyzer.ui.Analyze.AnalyzeFragment"
+        android:name="com.example.taskkeeperandanalyzer.ui.analyze.AnalyzeFragment"
         android:label="Analyze"
         tools:layout="@layout/fragment_analyze" />
     <fragment

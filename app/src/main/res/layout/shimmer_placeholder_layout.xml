@@ -27,7 +27,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@color/task_type_color"
+                android:background="@drawable/shimmer_color"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
                     android:layout_weight="0.3"
-                    android:background="@color/task_type_color"
+                    android:background="@drawable/shimmer_color"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
                     android:layout_height="54dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@color/task_type_color"
+                    android:background="@drawable/shimmer_color"
                     android:textSize="19sp" />
 
 
@@ -73,7 +73,7 @@
                 android:layout_width="99dp"
                 android:layout_height="31dp"
                 android:layout_margin="7dp"
-                android:background="@color/task_type_color"
+                android:background="@drawable/shimmer_color"
                 android:padding="3dp"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

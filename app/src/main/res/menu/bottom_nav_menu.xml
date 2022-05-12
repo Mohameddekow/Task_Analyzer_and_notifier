@@ -10,10 +10,11 @@
             android:title="Home" />
 
 
-        <item
-            android:id="@+id/calendarFragment"
-            android:icon="@drawable/ic_round_calendar_month"
-            android:title="Calender" />
+<!--        <item-->
+<!--            android:id="@+id/calendarFragment"-->
+<!--            android:icon="@drawable/ic_round_calendar_month"-->
+<!--            android:title="Calender" />-->
+
         <item
             android:id="@+id/analyzeFragment"
             android:icon="@drawable/ic_round_analytics"
