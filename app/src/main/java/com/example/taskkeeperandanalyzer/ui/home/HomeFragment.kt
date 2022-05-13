@@ -2,7 +2,6 @@ package com.example.taskkeeperandanalyzer.ui.home
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -91,6 +90,7 @@ class HomeFragment : Fragment(), HomeRecyclerViewAdapter.ItemClickListener {
 
         return binding.root
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_menu,menu)

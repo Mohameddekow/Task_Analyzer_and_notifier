@@ -23,7 +23,7 @@ constructor(
     val fetchingTasksState: LiveData<Resource<List<TaskModel>>> get() = _fetchingTasksState
 
 
- //fetch all tasks details
+ //fetch all tasks
     fun getAllTasks(
         userId: String,
         taskRootRef: String

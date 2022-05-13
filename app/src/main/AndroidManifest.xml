@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <application
 
         android:allowBackup="true"
@@ -14,6 +15,9 @@
         android:supportsRtl="true"
         android:name=".TaskKeeperApplication"
         android:theme="@style/Theme.TaskKeeperAndAnalyzer">
+        <receiver
+            android:name=".notification.Notification"
+            android:enabled="true"/>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
