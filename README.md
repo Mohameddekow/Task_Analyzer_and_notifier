@@ -72,7 +72,19 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
       shimmer loading effect | Home | Add task
       --- | --- | ---
       <img src="https://user-images.githubusercontent.com/61431856/167199800-71eb150c-7fff-4de9-b7fb-fb479314d3e7.jpg" width="280"/> | <img src="https://user-images.githubusercontent.com/61431856/167199838-d7bf2bf5-4621-4549-b927-a3bbd678c95e.jpg" width="280"/> | <img src="https://user-images.githubusercontent.com/61431856/167199884-95444029-1eef-442f-9cea-68622e999427.jpg" width="280"/>
+      
 
+
+
+
+## Analysis and notification
+
+   * Light
+    
+      analysis of tasks | notification
+      --- | --- 
+      <img src="https://user-images.githubusercontent.com/61431856/168285946-7c419926-d45d-49ab-b929-65029c7d31cc.jpg" width="280"/> | <img src="https://user-images.githubusercontent.com/61431856/168285964-ba737a2b-a1b1-42a5-ae4a-72b26eb5aee3.jpg" width="280"/> 
+      
 
 
 
