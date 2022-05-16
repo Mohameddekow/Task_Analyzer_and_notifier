@@ -60,6 +60,10 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
 
 ## Main Screen
 
+
+
+
+
    * Light
     
       shimmer loading effect | Home | Add task
@@ -75,8 +79,6 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
       
 
 
-
-
 ## Analysis and notification
 
    * Light
@@ -88,6 +90,15 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
 
 
 
+## Overview of how the app works - .gif
+
+   <img src= "https://user-images.githubusercontent.com/61431856/168692068-09931093-3b44-4c95-8aed-9e9eb7dd3732.gif"
+    width="350"  /> 
+    
+
+    
+    
+ 
 ## Authentication
 
    * Light
@@ -95,6 +106,8 @@ I added some screenshots in the `screenshots` folder, in the root directory of t
       login | forgot password | register
       --- | --- | ---
       <img src="https://user-images.githubusercontent.com/61431856/167200796-1a95f264-0a86-4186-9a5b-33eaf58f1976.jpg" width="280"/> | <img src="https://user-images.githubusercontent.com/61431856/167200841-f396d639-0a49-42da-b64b-a6ed52f8e4d7.jpg" width="280"/> | <img src="https://user-images.githubusercontent.com/61431856/167203489-49e03286-dffc-4f0d-a747-eb56a228dcfe.jpeg" width="280"/>
+
+
 
 
 
