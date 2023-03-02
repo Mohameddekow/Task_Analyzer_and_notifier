@@ -1,4 +1,4 @@
-# Task Analyzer and notifier
+# Task Analyzer and Notifier
 
 ### #The Project's objective was developed to help people around the world easily analyze, keep and remind their tasks with notifications
 * The app can:
